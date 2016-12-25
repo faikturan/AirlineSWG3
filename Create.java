@@ -104,6 +104,30 @@ public class Create extends JFrame implements ActionListener {
 		add(econRadioBtn);
 		add(busRadioBtn);
 		
+		//set compenent bound (only needed by Absolute Positioning)
+		flightIdLbl.setBounds(50, 15, 100, 25);
+		deptTimeLbl.setBounds(50, 40, 100, 25);
+		arrivalTimeLbl.setBounds(50, 65, 100, 25);
+		originLbl.setBounds(50, 90, 100, 25);
+		destinationLbl.setBounds(50, 115, 100, 25);
+		custIdLbl.setBounds(300, 15, 100, 25);
+		fnameLbl.setBounds(300, 40, 100, 25);
+		snameLbl.setBounds(300, 60, 100, 25);
+		contactNoLbl.setBounds(300, 90, 100, 25);
+		bookingType.setBounds(300, 125, 100, 25);
+		flightIdTf.setBounds(150, 15, 125, 25);
+		depTimeTf.setBounds(150, 40, 125, 25);
+		arrTimeTf.setBounds(150, 65, 125, 25);
+		custIdTf.setBounds(390, 15, 125, 25);
+		fnameTf.setBounds(390, 40, 125, 25);
+		surnameTf.setBounds(390, 65, 125, 25);
+		contactNoTf.setBounds(390, 90, 125, 25);
+		createBtn.setBounds(540, 40, 100, 25);
+		cancelBtn.setBounds(540, 70, 100, 25);
+		originCbox.setBounds(150, 90, 125, 25);
+		destinationCbox.setBounds(150, 115, 125, 25);
+		econRadioBtn.setBounds(410, 115, 80, 25);
+		busRadioBtn.setBounds(410, 140, 100, 25);
 		
 		
 		
