@@ -39,17 +39,17 @@ public class Create extends JFrame implements ActionListener {
 	private JRadioButton econRadioBtn;
 	private JRadioButton busRadioBtn;
 	private ButtonGroup bg;
-	
+
 	public Create() {
 		super("Create Booking");
-		
-		//construct preCompenents
-		String[] originCBoxItems = {"Ireland", "United Kingdom", "France", "Germany", "Spain",
-				"Greece", "Poland", "Holland", "Sweden", "Norway", "Portugal", "Italy", "Belarus", "Turkey"};
-		String[] destinationCBoxItems = {"Ireland", "United Kingdom", "France", "Germany", "Spain",
-				"Greece", "Poland", "Holland", "Sweden", "Norway", "Portugal", "Italy", "Belarus", "Turkey"};
-		
-		//construct compenents
+
+		// construct preCompenents
+		String[] originCBoxItems = { "Ireland", "United Kingdom", "France", "Germany", "Spain", "Greece", "Poland",
+				"Holland", "Sweden", "Norway", "Portugal", "Italy", "Belarus", "Turkey" };
+		String[] destinationCBoxItems = { "Ireland", "United Kingdom", "France", "Germany", "Spain", "Greece", "Poland",
+				"Holland", "Sweden", "Norway", "Portugal", "Italy", "Belarus", "Turkey" };
+
+		// construct compenents
 		flightIdLbl = new JLabel("Flight ID: ");
 		deptTimeLbl = new JLabel("Departure Time: ");
 		arrivalTimeLbl = new JLabel("Arrival Time: ");
@@ -76,12 +76,12 @@ public class Create extends JFrame implements ActionListener {
 		bg = new ButtonGroup();
 		bg.add(econRadioBtn);
 		bg.add(busRadioBtn);
-		
-		//adjust size and set layout
+
+		// adjust size and set layout
 		setSize(690, 215);
 		setLayout(null);
-		
-		//add compenents
+
+		// add compenents
 		add(flightIdLbl);
 		add(deptTimeLbl);
 		add(arrivalTimeLbl);
@@ -105,8 +105,8 @@ public class Create extends JFrame implements ActionListener {
 		add(destinationCbox);
 		add(econRadioBtn);
 		add(busRadioBtn);
-		
-		//set compenent bound (only needed by Absolute Positioning)
+
+		// set compenent bound (only needed by Absolute Positioning)
 		flightIdLbl.setBounds(50, 15, 100, 25);
 		deptTimeLbl.setBounds(50, 40, 100, 25);
 		arrivalTimeLbl.setBounds(50, 65, 100, 25);
@@ -130,21 +130,21 @@ public class Create extends JFrame implements ActionListener {
 		destinationCbox.setBounds(150, 115, 125, 25);
 		econRadioBtn.setBounds(410, 115, 80, 25);
 		busRadioBtn.setBounds(410, 140, 100, 25);
-		
-		//add ActionListener to buttons
+
+		// add ActionListener to buttons
 		createBtn.addActionListener(this);
 		cancelBtn.addActionListener(this);
-		
+
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setBackground(Color.WHITE);
-		setLocationRelativeTo(null);//center Frame on screen
+		setLocationRelativeTo(null);// center Frame on screen
 		setVisible(true);
-		}
-	
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		Object target = event.getSource();
-		
+
 		if (target == createBtn) {
 			try {
 				String flightId = flightIdTf.getText();
@@ -154,36 +154,42 @@ public class Create extends JFrame implements ActionListener {
 				String fname = fnameTf.getText();
 				String sname = surnameTf.getText();
 				String contactNo = contactNoTf.getText();
-				
-				//cast comboBox selection to a String object
+
+				// cast comboBox selection to a String object
 				String origin = (String) originCbox.getSelectedItem();
 				String destination = (String) destinationCbox.getSelectedItem();
-				//get radioGroup selected item
+				// get radioGroup selected item
 				String bookingType;
 				if (econRadioBtn.isSelected()) {
 					bookingType = "Economy";
-				} else if(busRadioBtn.isSelected()) {
+				} else if (busRadioBtn.isSelected()) {
 					bookingType = "Business";
-				}else{
+				} else {
 					JOptionPane.showMessageDialog(null, "Please Select a Booking Type");
-					return;//stop current method
+					return;// stop current method
 				}
-				
-				//create insert statement and create the new record
+
+				// create insert statement and create the new record
 				String newBooking = "INSERT INTO booking_info (Flight_Id,"
 						+ "Departure_Time, Arrival_Time, Origin, Destination, Customer_Id,"
-						+ "Customer_Fname, Customer_Sname, Customer_ContactNo, Booking_Type)"
-						+ "VALUES ('"+flightId+"', '"+deptTime+"', '"+arrTime+"', '"+origin+"', "
-								+ "'"+destination+"','"+customer+"', '"+fname+"', "
-										+ "'"+sname+"', '"+contactNo+"', '"+bookingType+"')";
-						
-			} catch (Exception e) {
-				// TODO: handle exception
+						+ "Customer_Fname, Customer_Sname, Customer_ContactNo, Booking_Type)" + "VALUES ('" + flightId
+						+ "', '" + deptTime + "', '" + arrTime + "', '" + origin + "', " + "'" + destination + "','"
+						+ customer + "', '" + fname + "', " + "'" + sname + "', '" + contactNo + "', '" + bookingType
+						+ "')";
+				ConnectionHelper.st.executeUpdate(newBooking);//execute SQL statement
+				
+				JOptionPane.showMessageDialog(null, "Record Successfully Added to Database");
+				MainMenu.count++;
+				MainMenu.initialise();
+				this.setVisible(true);
+			} catch (Exception ex) {
+				System.out.println("Exception: " +ex);
 			}
-		} else {
+		} 
+		if (target == cancelBtn) {
+			this.dispose();
+		}
 
 		}
 
 	}
-
-}
