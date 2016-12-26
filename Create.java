@@ -1,5 +1,6 @@
 package com.faikturan;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
@@ -49,7 +51,7 @@ public class Create extends JFrame implements ActionListener {
 		
 		//construct compenents
 		flightIdLbl = new JLabel("Flight ID: ");
-		deptTimeLbl = new JLabel("Deoarture Time: ");
+		deptTimeLbl = new JLabel("Departure Time: ");
 		arrivalTimeLbl = new JLabel("Arrival Time: ");
 		originLbl = new JLabel("Origin:");
 		destinationLbl = new JLabel("Destination:");
@@ -129,14 +131,50 @@ public class Create extends JFrame implements ActionListener {
 		econRadioBtn.setBounds(410, 115, 80, 25);
 		busRadioBtn.setBounds(410, 140, 100, 25);
 		
+		//add ActionListener to buttons
+		createBtn.addActionListener(this);
+		cancelBtn.addActionListener(this);
 		
-		
-		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		getContentPane().setBackground(Color.WHITE);
+		setLocationRelativeTo(null);//center Frame on screen
+		setVisible(true);
 		}
 	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent event) {
+		Object target = event.getSource();
 		
+		if (target == createBtn) {
+			try {
+				String flightId = flightIdTf.getText();
+				String deptTime = depTimeTf.getText();
+				String arrTime = arrTimeTf.getText();
+				String customer = custIdTf.getText();
+				String fname = fnameTf.getText();
+				String sname = surnameTf.getText();
+				String contactNo = contactNoTf.getText();
+				
+				//cast comboBox selection to a String object
+				String origin = (String) originCbox.getSelectedItem();
+				String destination = (String) destinationCbox.getSelectedItem();
+				//get radioGroup selected item
+				String bookingType;
+				if (econRadioBtn.isSelected()) {
+					bookingType = "Economy";
+				} else if(busRadioBtn.isSelected()) {
+					bookingType = "Business";
+				}else{
+					JOptionPane.showMessageDialog(null, "Please Select a Booking Type");
+					return;//stop current method
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		} else {
+
+		}
 
 	}
 
