@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.border.Border;
 
 public class MainMenu extends JFrame implements ActionListener {
@@ -140,7 +141,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		Border border = BorderFactory.createLineBorder(Color.gray, 1);
 		imageLabel.setBorder(border);
 
-		// set compenent bound (only needed by Absolute Positioning)
+		// set component bounds (only needed by Absolute Positioning)
 		flightIdLbl.setBounds(50, 105, 100, 25);
 		deptTimeLbl.setBounds(50, 130, 100, 25);
 		arrivalTimeLbl.setBounds(50, 155, 100, 25);
@@ -151,16 +152,53 @@ public class MainMenu extends JFrame implements ActionListener {
 		snameLbl.setBounds(270, 155, 100, 25);
 		contactNoLbl.setBounds(270, 180, 100, 25);
 		bookingType.setBounds(270, 205, 100, 25);
-		flightIdTf.setBounds(150, 15, 125, 25);
-		depTimeTf.setBounds(150, 40, 125, 25);
-		arrTimeTf.setBounds(150, 65, 125, 25);
-		custIdTf.setBounds(390, 15, 125, 25);
-		fnameTf.setBounds(390, 40, 125, 25);
-		surnameTf.setBounds(390, 65, 125, 25);
-		contactNoTf.setBounds(390, 90, 125, 25);
-		createBtn.setBounds(540, 40, 100, 25);
-		
+		flightIdTf.setBounds(150, 105, 100, 25);
+		depTimeTf.setBounds(150, 130, 100, 25);
+		arrTimeTf.setBounds(150, 155, 100, 25);
+		originTf.setBounds(150, 180, 100, 25);
+		destTf.setBounds(150, 205, 100, 25);
+		custIdTf.setBounds(370, 105, 100, 25);
+		fnameTf.setBounds(370, 130, 100, 25);
+		surnameTf.setBounds(370, 155, 100, 25);
+		contactNoTf.setBounds(370, 180, 100, 25);
+		bookingTypeTf.setBounds(370, 205, 100, 25);
+		prevBtn.setBounds(210, 255, 85, 25);
+		nextBtn.setBounds(320, 255, 85, 25);
+		createBtn.setBounds(655, 100, 100, 25);
+		updateBtn.setBounds(655, 130, 100, 25);
+		deleteBtn.setBounds(655, 160, 100, 25);
+		closeBtn.setBounds(670, 255, 70, 25);
+		imageLabel.setBounds(485, 105, 120, 125);
+		backupBtn.setBounds(640, 190, 125, 25);
+		reportBtn.setBounds(640, 220, 125, 25);
+		clockLbl.setBounds(681, 30, 110, 25);
+		dateLbl.setBounds(681, 50, 110, 25);
+		userLbl.setBounds(681, 10, 100, 25);
+		loggedDescLbl.setBounds(640, 10, 100, 25);
+		timeDescLbl.setBounds(640, 30, 45, 25);
+		dateDescLbl.setBounds(640, 50, 45, 25);
+		logoLbl.setBounds(160, 10, 300, 80);
 
+		// add actionlisteners to buttons
+		prevBtn.addActionListener(this);
+		nextBtn.addActionListener(this);
+		createBtn.addActionListener(this);
+		updateBtn.addActionListener(this);
+		deleteBtn.addActionListener(this);
+		closeBtn.addActionListener(this);
+		backupBtn.addActionListener(this);
+		reportBtn.addActionListener(this);
+
+		// populate textfields
+		initialise();
+
+		// create & initialise timer for real-time clock
+		new Timer(1000, this).start();
+
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		getContentPane().setBackground(Color.WHITE);
+		setLocationRelativeTo(null); // center Frame on screen
+		setVisible(true);
 	}
 
 	public static void initialise() {
