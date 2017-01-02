@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 
+import com.faikturan.Booking.Booking_Type;
+
 public class MainMenu extends JFrame implements ActionListener {
 	private JLabel flightIdLbl;
 	private JLabel arrivalTimeLbl;
@@ -202,7 +204,36 @@ public class MainMenu extends JFrame implements ActionListener {
 	}
 
 	public static void initialise() {
-		// TODO Auto-generated method stub
+		try {
+			ConnectionHelper.rs = ConnectionHelper.st.executeQuery("SELECT * FROM booking_info");
+
+			// count number of booking records
+			count = 0;
+			while (ConnectionHelper.rs.next()) {
+				count++;
+				System.out.println("No, of Booking Records : " + count);
+
+				// navigate the recordSet back to the first record
+				ConnectionHelper.rs.first();
+				current = 1;
+				myBooking.setFlight_Id(ConnectionHelper.rs.getString("Flight_Id"));
+				myBooking.setDeparture_Time(ConnectionHelper.rs.getString("Departure_Time"));
+				myBooking.setArrival_Time(ConnectionHelper.rs.getString("Arrival_Time"));
+				myBooking.setOrigin(ConnectionHelper.rs.getString("Origin"));
+				myBooking.setDestination(ConnectionHelper.rs.getString("Destination"));
+				myBooking.setCustomer_Id(ConnectionHelper.rs.getString("Customer_Id"));
+				myBooking.setCustomer_Fname(ConnectionHelper.rs.getString("Customer_Fname"));
+				myBooking.setCustomer_Sname(ConnectionHelper.rs.getString("Customer_Sname"));
+				myBooking.setCustomer_Photo(ConnectionHelper.rs.getString("Customer_Photo"));
+				myBooking.setCustomer_ContactNo(ConnectionHelper.rs.getString("Customer_Contact_No"));
+				myBooking.setBooking_Type(ConnectionHelper.rs.getString("Booking_Type"));
+				
+				
+
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 	}
 
