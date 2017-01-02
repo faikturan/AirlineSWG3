@@ -3,6 +3,9 @@ package com.faikturan;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -11,12 +14,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 
 import com.faikturan.Booking.Booking_Type;
+
 
 public class MainMenu extends JFrame implements ActionListener {
 	private JLabel flightIdLbl;
@@ -29,16 +34,16 @@ public class MainMenu extends JFrame implements ActionListener {
 	private JLabel snameLbl;
 	private JLabel contactNoLbl;
 	private JLabel bookingType;
-	private JTextField flightIdTf;
-	private JTextField depTimeTf;
-	private JTextField arrTimeTf;
-	private JTextField originTf;
-	private JTextField destTf;
-	private JTextField custIdTf;
-	private JTextField fnameTf;
-	private JTextField surnameTf;
-	private JTextField contactNoTf;
-	private JTextField bookingTypeTf;
+	private static JTextField flightIdTf;
+	private static JTextField depTimeTf;
+	private static JTextField arrTimeTf;
+	private static JTextField originTf;
+	private static JTextField destTf;
+	private static JTextField custIdTf;
+	private static JTextField fnameTf;
+	private static JTextField surnameTf;
+	private static JTextField contactNoTf;
+	private static JTextField bookingTypeTf;
 	private JButton prevBtn;
 	private JButton nextBtn;
 	private JButton createBtn;
@@ -227,19 +232,108 @@ public class MainMenu extends JFrame implements ActionListener {
 				myBooking.setCustomer_Photo(ConnectionHelper.rs.getString("Customer_Photo"));
 				myBooking.setCustomer_ContactNo(ConnectionHelper.rs.getString("Customer_Contact_No"));
 				myBooking.setBooking_Type(ConnectionHelper.rs.getString("Booking_Type"));
-				
-				
+
+				flightIdTf.setText("" + myBooking.flight_Id);
+				depTimeTf.setText("" + myBooking.departure_Time);
+				arrTimeTf.setText("" + myBooking.arrival_Time);
+				originTf.setText("" + myBooking.origin);
+				destTf.setText("" + myBooking.destination);
+				custIdTf.setText("" + myBooking.customer_Id);
+				fnameTf.setText("" + myBooking.customer_Fname);
+				surnameTf.setText("" + myBooking.customer_Sname);
+				contactNoTf.setText("" + myBooking.customer_ContactNo);
+				bookingTypeTf.setText("" + myBooking.booking_Type);
+
+				imageLabel.setIcon(new ImageIcon("resources\\" + myBooking.getCustomer_Photo()));
 
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception ex) {
+			System.out.println("Exception - initialise method : " +ex);
 		}
 
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent event) {
+		Object target = event.getSource();
+		
+		//set Date
+		String todaysDate = getDate();
+		dateLbl.setText(""+ todaysDate);
+		
+		//set time
+		SimpleDateFormat myFormat = new SimpleDateFormat("HH:mm:ss");
+		String timeString = myFormat.format(new Date());
+		clockLbl.setText(""+timeString);//Update label text
+		
+		if (target == nextBtn) {
+			try {
+				if (current != count) {
+					moveToRow(current+1);
+				}
+			} catch (Exception ex) {
+				System.out.println("Error in next button : " +ex);
+			}
+		}
+		
+		if (target == prevBtn) {
+			try {
+				if (current != 1) {
+					moveToRow(current-1);
+				}
+			} catch (Exception ex) {
+				System.out.println("Error in previous button : " +ex);
+			}
+		}
+		
+		if (target == createBtn) {
+			Create myCreate = new Create();
+		}
+		
+		if (target == updateBtn) {
+			 Update myUpdate = new Update();
+		}
+		
+		if (target == deleteBtn) {
+			try {
+				int confirm = JOptionPane.showConfirmDialog(null, "Confirm Delete Record",
+						"Choose", JOptionPane.YES_NO_OPTION);
+				if (confirm == JOptionPane.YES_OPTION) {
+					String flightId = flightIdTf.getText();
+					//prepared statement
+					PreparedStatement pstmt = ConnectionHelper.con.
+							prepareStatement("DELETE FROM booking_info WHERE Flight_Id = ?");
+					pstmt.setString(1, flightId);
+					pstmt.executeUpdate();//execute delete
+					JOptionPane.showMessageDialog(null, "Record Deleted");
+					//display first record in database
+					moveToRow(1);
+					current = 1;
+					System.out.println("Flight ID: " +flightId + " deleted from database");
+				}
+			} catch (Exception ex) {
+				System.out.println("Error in delete button " +ex);
+			}
+		}
+		
+		
+		
+
+	}
+
+	private void moveToRow(int i) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	public String getDate() {
+		SimpleDateFormat myFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
+		String dateString = myFormat.format(new Date());
+		return dateString;
+	}
+	
+	public static void main(String[] args) {
+		MainMenu myMenu = new MainMenu();
 
 	}
 
