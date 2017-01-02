@@ -316,9 +316,36 @@ public class MainMenu extends JFrame implements ActionListener {
 			}
 		}
 		
+		if (target == backupBtn) {
+			buildBookingObject();
+			Serialization.serialize(myBooking);
+			JOptionPane.showMessageDialog(null, "Record Successfully Updated");
+		}
 		
+		if (target == reportBtn) {
+			Serialization.deserialize();
+		}
+		
+		if (target == closeBtn) {
+			int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you wisj to EXIT?",
+					"Choose", JOptionPane.YES_NO_OPTION);
+			if (confirm == JOptionPane.YES_OPTION) {
+				try {
+					ConnectionHelper.rs.close();
+					dispose();
+					System.exit(0);
+				} catch (Exception ex) {
+					System.out.println("Exit Button Error " +ex);
+				}
+			}
+		}
 		
 
+	}
+
+	private void buildBookingObject() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void moveToRow(int i) {
