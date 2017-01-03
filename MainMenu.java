@@ -348,8 +348,33 @@ public class MainMenu extends JFrame implements ActionListener {
 		
 	}
 
-	private void moveToRow(int i) {
-		// TODO Auto-generated method stub
+	public void moveToRow(int index) {
+		try {
+			System.out.println("Moving To Row");
+			ConnectionHelper.rs = ConnectionHelper.st.executeQuery("SELECT * FROM booking_info");
+			for (int i = 0; i < index; i++) {
+				ConnectionHelper.rs.next();//move to specific row in table(at index)
+				buildBookingObject();
+			
+				flightIdTf.setText(""+ myBooking.flight_Id);
+				depTimeTf.setText(""+ myBooking.departure_Time);
+				arrTimeTf.setText(""+ myBooking.arrival_Time);
+				originTf.setText(""+ myBooking.origin);
+				destTf.setText(""+ myBooking.destination);
+				custIdTf.setText(""+ myBooking.customer_Id);
+				fnameTf.setText(""+ myBooking.customer_Fname);
+				surnameTf.setText(""+ myBooking.customer_Sname);
+				contactNoTf.setText(""+ myBooking.customer_ContactNo);
+				bookingTypeTf.setText(""+ myBooking.booking_Type);
+				
+				imageLabel.setIcon(new ImageIcon("resources\\" + myBooking.getCustomer_Photo()));
+				
+				current = index;
+				
+			}
+		} catch (Exception ex) {
+			System.out.println("Exception - moveToRow method : " +ex);
+		}
 		
 	}
 
