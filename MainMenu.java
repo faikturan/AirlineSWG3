@@ -329,7 +329,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		}
 
 		if (target == closeBtn) {
-			int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you wisj to EXIT?", "Choose",
+			int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you wish to EXIT?", "Choose",
 					JOptionPane.YES_NO_OPTION);
 			if (confirm == JOptionPane.YES_OPTION) {
 				try {
@@ -345,7 +345,21 @@ public class MainMenu extends JFrame implements ActionListener {
 	}
 
 	private void buildBookingObject() {
-		
+		try {
+			myBooking.setFlight_Id(ConnectionHelper.rs.getString("Flight_id"));
+			myBooking.setDeparture_Time(ConnectionHelper.rs.getString("Departure_Time"));
+			myBooking.setArrival_Time(ConnectionHelper.rs.getString("Arrival_Time"));
+			myBooking.setOrigin(ConnectionHelper.rs.getString("Origin"));
+			myBooking.setDestination(ConnectionHelper.rs.getString("Destination"));
+			myBooking.setCustomer_Id(ConnectionHelper.rs.getString("Customer_Id"));
+			myBooking.setCustomer_Fname(ConnectionHelper.rs.getString("Customer_Fname"));
+			myBooking.setCustomer_Sname(ConnectionHelper.rs.getString("Customer_Sname"));
+			myBooking.setCustomer_Photo(ConnectionHelper.rs.getString("Customer_Photo"));
+			myBooking.setCustomer_ContactNo(ConnectionHelper.rs.getString("Customer_ContactNo"));
+			myBooking.setBooking_Type(ConnectionHelper.rs.getString("Booking_Type"));
+		} catch (Exception ex) {
+			System.out.println("Exception in buildBookingObject Method : " +ex);
+		}
 
 	}
 
