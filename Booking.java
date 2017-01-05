@@ -139,8 +139,8 @@ public class Booking implements Serializable {
 		return booking_Type;
 	}
 
-	public void setBooking_Type(Booking_Type booking_Type) {
-		this.booking_Type = booking_Type;
+	public void setBooking_Type(String type) {
+		this.booking_Type = Booking_Type.valueOf(type);
 	}
 
 	@Override
