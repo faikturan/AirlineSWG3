@@ -169,13 +169,9 @@ public class Create extends JFrame implements ActionListener {
 					return;// stop current method
 				}
 
+				System.out.println("Merhaba Mustafa Hocam");
 				// create insert statement and create the new record
-				String newBooking = "INSERT INTO booking_info (Flight_Id,"
-						+ "Departure_Time, Arrival_Time, Origin, Destination, Customer_Id,"
-						+ "Customer_Fname, Customer_Sname, Customer_ContactNo, Booking_Type)" + "VALUES ('" + flightId
-						+ "', '" + deptTime + "', '" + arrTime + "', '" + origin + "', " + "'" + destination + "','"
-						+ customer + "', '" + fname + "', " + "'" + sname + "', '" + contactNo + "', '" + bookingType
-						+ "')";
+				String newBooking = "INSERT INTO booking_info (Flight_Id,Departure_Time, Arrival_Time, Origin, Destination, Customer_Id,Customer_Fname, Customer_Sname,Customer_Photo, Customer_ContactNo, Booking_Type) VALUES ('"+ flightId +"', '"+ deptTime +"', '"+ arrTime +" ', '"+ origin  +"', '"+ destination +"','"+ customer +" ', '"+  fname +" ','"+ sname +"','resim', '"+ contactNo +"', '"+ bookingType +"')";
 				ConnectionHelper.st.executeUpdate(newBooking);//execute SQL statement
 				
 				JOptionPane.showMessageDialog(null, "Record Successfully Added to Database");
@@ -191,5 +187,10 @@ public class Create extends JFrame implements ActionListener {
 		}
 
 		}
+	
+	public static void main(String[] args) {
+		Create myCreate = new Create();
+
+	}
 
 	}
