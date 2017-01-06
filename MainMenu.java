@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 
-import com.muratkorkmaz.Booking.Booking_Type;
+import com.faikturan.Booking.Booking_Type;
 
 import javax.swing.JFrame;
 
