@@ -97,7 +97,8 @@ public class Login extends JFrame implements Database_Interface, ActionListener 
 			
 			if (count==1) {
 				System.out.println("Username & Password Authenticated");
-				MainMenu myMenu = new MainMenu();	
+				MainMenu myMenu = new MainMenu();
+				this.dispose();
 			} else {
 				System.out.println("Invalid Login Credentials ");
 			}
