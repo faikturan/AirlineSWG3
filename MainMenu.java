@@ -140,6 +140,8 @@ public class MainMenu extends JFrame implements ActionListener {
 		add(originTf);
 		add(destTf);
 		add(bookingTypeTf);
+		add(prevBtn);
+		add(nextBtn);
 		add(createBtn);
 		add(updateBtn);
 		add(deleteBtn);
