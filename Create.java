@@ -135,7 +135,7 @@ public class Create extends JFrame implements ActionListener {
 		createBtn.addActionListener(this);
 		cancelBtn.addActionListener(this);
 
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setBackground(Color.WHITE);
 		setLocationRelativeTo(null);// center Frame on screen
 		setVisible(true);
