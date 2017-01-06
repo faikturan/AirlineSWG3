@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 
-import com.faikturan.Booking.Booking_Type;
+import com.muratkorkmaz.Booking.Booking_Type;
 
 import javax.swing.JFrame;
 
@@ -71,6 +71,7 @@ public class MainMenu extends JFrame implements ActionListener {
 	public static int current = 0;
 
 	public MainMenu() {
+		
 		// construct compenents
 		flightIdLbl = new JLabel("Flight ID: ");
 		deptTimeLbl = new JLabel("Departure Time: ");
@@ -89,6 +90,9 @@ public class MainMenu extends JFrame implements ActionListener {
 		fnameTf = new JTextField(5);
 		surnameTf = new JTextField(5);
 		contactNoTf = new JTextField(5);
+		originTf = new JTextField(5);
+		destTf = new JTextField(5);
+		bookingTypeTf = new JTextField(5);
 		prevBtn = new JButton("Previous");
 		nextBtn = new JButton("Next");
 		createBtn = new JButton("Create");
@@ -106,13 +110,15 @@ public class MainMenu extends JFrame implements ActionListener {
 		dateDescLbl = new JLabel("Date : ");
 
 		// Add logo image to label
-		ImageIcon image = new ImageIcon("resources/airline.jpg");
+		ImageIcon image = new ImageIcon("resources\\images.jpg");
 		logoLbl = new JLabel("", image, JLabel.CENTER);
 
 		// adjust size and layout
 		setSize(840, 335);
 		setLayout(null);
-
+		
+		
+		
 		// add compenents
 		add(flightIdLbl);
 		add(deptTimeLbl);
@@ -131,6 +137,9 @@ public class MainMenu extends JFrame implements ActionListener {
 		add(fnameTf);
 		add(surnameTf);
 		add(contactNoTf);
+		add(originTf);
+		add(destTf);
+		add(bookingTypeTf);
 		add(createBtn);
 		add(updateBtn);
 		add(deleteBtn);
@@ -149,7 +158,9 @@ public class MainMenu extends JFrame implements ActionListener {
 		// add border to customerImage Label
 		Border border = BorderFactory.createLineBorder(Color.gray, 1);
 		imageLabel.setBorder(border);
-
+		
+		
+		
 		// set component bounds (only needed by Absolute Positioning)
 		flightIdLbl.setBounds(50, 105, 100, 25);
 		deptTimeLbl.setBounds(50, 130, 100, 25);
@@ -161,7 +172,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		snameLbl.setBounds(270, 155, 100, 25);
 		contactNoLbl.setBounds(270, 180, 100, 25);
 		bookingType.setBounds(270, 205, 100, 25);
-		flightIdTf.setBounds(150, 105, 100, 25);
+		flightIdTf.setBounds(150, 105, 100, 25);	
 		depTimeTf.setBounds(150, 130, 100, 25);
 		arrTimeTf.setBounds(150, 155, 100, 25);
 		originTf.setBounds(150, 180, 100, 25);
@@ -188,6 +199,8 @@ public class MainMenu extends JFrame implements ActionListener {
 		dateDescLbl.setBounds(640, 50, 45, 25);
 		logoLbl.setBounds(160, 10, 300, 80);
 
+		
+		
 		// add actionlisteners to buttons
 		prevBtn.addActionListener(this);
 		nextBtn.addActionListener(this);
@@ -199,7 +212,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		reportBtn.addActionListener(this);
 
 		// populate textfields
-		initialise();
+		initialize();
 
 		// create & initialise timer for real-time clock
 		new Timer(1000, this).start();
@@ -210,8 +223,9 @@ public class MainMenu extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
-	public static void initialise() {
+	public static void initialize() {
 		try {
+			
 			ConnectionHelper.rs = ConnectionHelper.st.executeQuery("SELECT * FROM booking_info");
 
 			// count number of booking records
@@ -221,7 +235,7 @@ public class MainMenu extends JFrame implements ActionListener {
 				System.out.println("No, of Booking Records : " + count);
 
 				// navigate the recordSet back to the first record
-				ConnectionHelper.rs.first();
+				//ConnectionHelper.rs.first();
 				current = 1;
 				myBooking.setFlight_Id(ConnectionHelper.rs.getString("Flight_Id"));
 				myBooking.setDeparture_Time(ConnectionHelper.rs.getString("Departure_Time"));
@@ -232,7 +246,7 @@ public class MainMenu extends JFrame implements ActionListener {
 				myBooking.setCustomer_Fname(ConnectionHelper.rs.getString("Customer_Fname"));
 				myBooking.setCustomer_Sname(ConnectionHelper.rs.getString("Customer_Sname"));
 				myBooking.setCustomer_Photo(ConnectionHelper.rs.getString("Customer_Photo"));
-				myBooking.setCustomer_ContactNo(ConnectionHelper.rs.getString("Customer_Contact_No"));
+				myBooking.setCustomer_ContactNo(ConnectionHelper.rs.getString("Customer_ContactNo"));
 				myBooking.setBooking_Type(ConnectionHelper.rs.getString("Booking_Type"));
 
 				flightIdTf.setText("" + myBooking.flight_Id);
@@ -381,7 +395,7 @@ public class MainMenu extends JFrame implements ActionListener {
 				fnameTf.setText("" + myBooking.customer_Fname);
 				surnameTf.setText("" + myBooking.customer_Sname);
 				contactNoTf.setText("" + myBooking.customer_ContactNo);
-				bookingTypeTf.setText("" + myBooking.booking_Type);
+				bookingTypeTf.setText(myBooking.booking_Type + " ");
 
 				imageLabel.setIcon(new ImageIcon("resources\\" + myBooking.getCustomer_Photo()));
 
@@ -398,11 +412,6 @@ public class MainMenu extends JFrame implements ActionListener {
 		SimpleDateFormat myFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
 		String dateString = myFormat.format(new Date());
 		return dateString;
-	}
-
-	public static void main(String[] args) {
-		MainMenu myMenu = new MainMenu();
-
 	}
 
 }
