@@ -110,7 +110,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		dateDescLbl = new JLabel("Date : ");
 
 		// Add logo image to label
-		ImageIcon image = new ImageIcon("resources\\images.jpg");
+		ImageIcon image = new ImageIcon("resources\\airline.jpg");
 		logoLbl = new JLabel("", image, JLabel.CENTER);
 
 		// adjust size and layout
